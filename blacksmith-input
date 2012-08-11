@@ -1,0 +1,14 @@
+#!/usr/bin/python2
+# -*- coding: utf-8 -*-
+
+import pexpect
+import sys
+
+if __name__ == '__main__':
+    child = pexpect.spawn('blacksmith post')
+    child.expect ('ost')
+    child.sendline(sys.argv[1])
+    child.expect ('author')
+    child.sendline(sys.argv[2])
+    child.sendline('y')
+    child.expect(pexpect.EOF)
