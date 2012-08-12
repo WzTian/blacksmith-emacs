@@ -1,13 +1,15 @@
 ;Weizhi Tian <tianweizhi@gmail.com>
 ;interact with blacksmith, the nodejs static site generator from
 ;within emacs.
+;put this file in your load-path and
+;put the following in your .emacs:
+;
+;(setq blacksmith-workdir (expand-file-name "path_to_your_dir"))
+;(setq author-name "yourname")
+;(setq blacksmith-input (expand-file-name "path to blacksmith-input"))
+;(require 'blacksmith)
 
-(setq blacksmith-workdir (expand-file-name "~/test_node_blog/wzt"))
 (setq pages-dir (concat blacksmith-workdir "/pages"))
-(setq author-name "wzt")
-(setq blacksmith-input (expand-file-name "~/bin/blacksmith-input"))
-; blacksmith-input is a python script using pyexpect module to
-; deal with the interactive blacksmith post.
 
 (defun blacksmith-new-post (title)
   (interactive "MTitle: ")
@@ -15,8 +17,8 @@
          (format "cd %s && %s %s %s" pages-dir blacksmith-input title author-name)))
     (progn
       (shell-command command-str)
-      (find-file (concat pages-dir "/" title "/page.json"))
-      (find-file (concat pages-dir "/" title "/content.md")))))
+      (find-file (concat pages-dir "/" (downcase title) "/page.json"))
+      (find-file (concat pages-dir "/" (downcase title) "/content.md")))))
 
 (defun blacksmith-generate ()
   (interactive)
